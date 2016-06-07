@@ -4,8 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-
-class Roboter;
+#include "Roboter.h"
 
 using namespace std;
 
