@@ -19,7 +19,7 @@ public:
     const bool isWestEmpty(const Roboter *roboter);
     const bool isEastEmpty(const Roboter *roboter);
     vector<Roboter> roboterList;
-    
+
 private:
     const char wall = '#';
     const char free = ' ';
