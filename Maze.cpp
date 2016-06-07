@@ -1,6 +1,3 @@
-#ifndef MAZE_C
-#define MAZE_C
-
 #include "Maze.h"
 #include "Roboter.h"
 
@@ -93,5 +90,3 @@ void Maze::getStartAndEnd() {
         }
     }
 }
-
-#endif
