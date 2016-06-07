@@ -3,6 +3,7 @@
 
 #include <thread>
 
+class Maze;
 class Roboter{
 public:
     Roboter(int color);

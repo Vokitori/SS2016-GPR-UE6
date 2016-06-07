@@ -1,6 +1,8 @@
 #include "Roboter.h"
 
-Roboter::Roboter(int color) : color(color){
+#include "Maze.h"
+
+Roboter::Roboter(int color) : color(color) {
 }
 
 Roboter::~Roboter() {
