@@ -3,8 +3,11 @@
 
 #include "Maze.h"
 #include "Roboter.h"
+#include <fstream>
 
-Maze::Maze(const string filename) {
+using namespace std;
+
+Maze::Maze(string filename) {
     ifstream infile(filename);
     string nextLine;
 
@@ -23,7 +26,7 @@ Maze::Maze(const string filename) {
 }
 
 void Maze::start() {
-    for (int y = 0; y < board.size; y++) {
+    for (int y = 0; y < board.size(); y++) {
         for (int x = 0; x < board[y].size(); x++) {
             cout << getCharAt(y, x);
         }
@@ -41,8 +44,7 @@ const bool Maze::isFinished(const Roboter* roboter) {
 }
 
 const bool Maze::isEmpty(const Roboter* roboter, const int rx, const int ry) {
-    if(){
-        roboter
+    if(board[roboter->x+rx][roboter->y+ry] == 0){
     return true;
     }
     else 
