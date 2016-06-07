@@ -1,7 +1,13 @@
+#ifndef MAZE_C
+#define MAZE_C
+
 #include "Maze.h"
 #include "Roboter.h"
+#include <fstream>
 
-Maze::Maze(const string filename) {
+using namespace std;
+
+Maze::Maze(string filename) {
     ifstream infile(filename);
     string nextLine;
 
@@ -20,7 +26,7 @@ Maze::Maze(const string filename) {
 }
 
 void Maze::start() {
-    for (int y = 0; y < board.size; y++) {
+    for (int y = 0; y < board.size(); y++) {
         for (int x = 0; x < board[y].size(); x++) {
             cout << getCharAt(y, x);
         }
@@ -31,6 +37,39 @@ void Maze::start() {
 }
 
 
+
+
+const bool Maze::isFinished(const Roboter* roboter) {
+
+}
+
+const bool Maze::isEmpty(const Roboter* roboter, const int rx, const int ry) {
+    if(board[roboter->x+rx][roboter->y+ry] == 0){
+    return true;
+    }
+    else 
+        return false;
+
+}
+
+const bool Maze::isNorthEmpty(const Roboter* roboter) {
+    return isEmpty(roboter, 0,-1);
+}
+
+const bool Maze::isSouthEmpty(const Roboter* roboter) {
+    return isEmpty(roboter, 0,1);
+
+}
+
+const bool Maze::isWestEmpty(const Roboter* roboter) {
+    return isEmpty(roboter, -1,0);
+
+}
+
+const bool Maze::isEastEmpty(const Roboter* roboter) {
+    return isEmpty(roboter, 1, 0);
+
+}
 
 
 const int Maze::getIntAt(const int x, const int y) {
@@ -90,3 +129,5 @@ void Maze::getStartAndEnd() {
         }
     }
 }
+
+#endif

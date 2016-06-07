@@ -11,7 +11,7 @@ using namespace std;
 
 class Maze {
 public:
-    Maze(const string &filename);
+    Maze(string filename);
     void start();
     const bool isFinished(const Roboter *roboter);
     const bool isNorthEmpty(const Roboter *roboter);

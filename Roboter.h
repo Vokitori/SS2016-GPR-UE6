@@ -10,6 +10,7 @@ public:
     virtual ~Roboter();
     int steps = 0;
     int color;
+    int x,y;
 private:
 
 };
