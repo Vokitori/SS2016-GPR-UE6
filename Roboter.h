@@ -4,46 +4,50 @@
 #include <thread>
 
 class Maze;
-class Roboter{
+
+class Roboter {
 public:
-    Roboter();
     Roboter(int color);
-    Roboter(const Roboter& orig);
-    virtual void findExit();
     virtual ~Roboter();
+    virtual void findExit();
     int steps = 0;
     int color;
-    int x,y;
+    int x, y;
 private:
 
 };
-
-
-
-
 
 /*
     inherited robots 
  */
 
-class Roboter_right : public Roboter{
+class Roboter_right : public Roboter {
 public:
-   ~Roboter_right();
+
+    Roboter_right(int color) : Roboter(color) {
+    };
+    ~Roboter_right();
     void findExit() override;
 private:
 
 };
 
-class Roboter_left : public Roboter{
+class Roboter_left : public Roboter {
 public:
+
+    Roboter_left(int color) : Roboter(color) {
+    };
     ~Roboter_left();
-     void findExit() override;
+    void findExit() override;
 private:
 
 };
 
-class Roboter_three: public Roboter{
+class Roboter_three : public Roboter {
 public:
+
+    Roboter_three(int color) : Roboter(color) {
+    };
     ~Roboter_three();
     void findExit() override;
 private:
