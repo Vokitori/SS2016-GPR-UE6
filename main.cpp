@@ -1,4 +1,7 @@
 #include <cstdlib>
+#include <stdio.h>
+#include <stdlib.h>
+
 #include <string>
 #include "Maze.h"
 
@@ -15,4 +18,6 @@ int main(int argc, char** argv) {
     m1.start();
     return 0;
 }
+
+
 

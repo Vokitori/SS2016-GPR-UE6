@@ -1,9 +1,6 @@
-#ifndef MAZE_C
-#define MAZE_C
-
 #include "Maze.h"
-#include "Roboter.h"
 #include <fstream>
+#include "termcolor.h"
 
 using namespace std;
 
@@ -26,43 +23,44 @@ Maze::Maze(string filename) {
 }
 
 void Maze::start() {
+    print();
+}
+
+void Maze::print() {
     for (int y = 0; y < board.size(); y++) {
         for (int x = 0; x < board[y].size(); x++) {
-            cout << getCharAt(y, x);
+            printBlock(y, x);
         }
         cout << endl;
     }
     cout << "Start: <" << startX << ", " << startY << "> " << endl;
     cout << "End: <" << endX << ", " << endY << "> " << endl;
+
 }
-
-
-
 
 const bool Maze::isFinished(const Roboter* roboter) {
 
 }
 
 const bool Maze::isEmpty(const Roboter* roboter, const int rx, const int ry) {
-    if(board[roboter->x+rx][roboter->y+ry] == 0){
-    return true;
-    }
-    else 
+    if (board[roboter->x + rx][roboter->y + ry] == 0) {
+        return true;
+    } else
         return false;
 
 }
 
 const bool Maze::isNorthEmpty(const Roboter* roboter) {
-    return isEmpty(roboter, 0,-1);
+    return isEmpty(roboter, 0, -1);
 }
 
 const bool Maze::isSouthEmpty(const Roboter* roboter) {
-    return isEmpty(roboter, 0,1);
+    return isEmpty(roboter, 0, 1);
 
 }
 
 const bool Maze::isWestEmpty(const Roboter* roboter) {
-    return isEmpty(roboter, -1,0);
+    return isEmpty(roboter, -1, 0);
 
 }
 
@@ -71,17 +69,42 @@ const bool Maze::isEastEmpty(const Roboter* roboter) {
 
 }
 
-
 const int Maze::getIntAt(const int x, const int y) {
     return board[x][y];
 }
 
-const char Maze::getCharAt(const int x, const int y) {
-    int pos = board[x][y];
-    if (pos == 0)
-        return free;
-    if (pos == 1)
-        return wall;
+const char Maze::printBlock(const int x, const int y) {
+    int value = board[x][y];
+    switch (value) {
+        case -1:
+            cout << termcolor::reset;
+            break;
+        case 0://WHITE
+            cout << termcolor::on_white;
+            break;
+        case 1://BLUE
+            cout << termcolor::on_blue;
+            break;
+        case 2://YELLOW
+            cout << termcolor::on_blue;
+            break;
+        case 3://GREEN
+            cout << termcolor::on_green;
+            break;
+        case 4://RED
+            cout << termcolor::on_red;
+            break;
+        case 5://MAGENTA
+            cout << termcolor::on_magenta;
+            break;
+        case 6://GREEN
+            cout << termcolor::on_cyan;
+            break;
+        case 7://GREY
+            cout << termcolor::on_grey;
+            break;
+    }
+    cout << " ";
 }
 
 void Maze::setIntAt(const int x, const int y, const int value) {
@@ -129,5 +152,3 @@ void Maze::getStartAndEnd() {
         }
     }
 }
-
-#endif
