@@ -19,5 +19,17 @@ int main(int argc, char** argv) {
     return 0;
 }
 
-
+/*
+ 
+ TODO:
+ Makefile einbauen
+ Roboter 1
+ Roboter 2
+ Roboter 3
+ Parameter aus Commandline verwenden
+ Maze.start() (Threads, Roboter starten)
+ Tabelle Roboter stepCount
+ Maze.markField(Roboter* r);
+ 
+ */
 
