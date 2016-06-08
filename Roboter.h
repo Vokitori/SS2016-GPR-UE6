@@ -17,7 +17,7 @@ public:
     int steps = 0;
     int color;
     int x, y;
-    Direction direction = NORTH;
+    Direction direction;
 private:
 
 };
