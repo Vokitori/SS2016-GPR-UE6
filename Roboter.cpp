@@ -120,11 +120,23 @@ Roboter_left::~Roboter_left() {
 }
 
 void Roboter_left::findExit(Maze* maze) {
-
+    while (!maze->isFinished(this)) {
+        action(maze);
+       /* maze->print();
+        printRoboter();
+        getchar();*/
+    }
 }
 
 bool Roboter_left::action(Maze* maze) {
-
+    if (maze->isLeftEmpty(this))
+        turnLeft();
+    else if (maze->isFrontEmpty(this));
+    else if (maze->isRightEmpty(this))
+        turnRight();
+    else turnAround();
+    moveForward(maze);
+    return !maze->isFinished(this);
 }
 
 

@@ -156,7 +156,7 @@ const char Maze::printBlock(const int x, const int y, const char c) const {
             cout << termcolor::on_blue;
             break;
         case 2://YELLOW
-            cout << termcolor::on_blue;
+            cout << termcolor::on_yellow;
             break;
         case 3://GREEN
             cout << termcolor::on_green;
