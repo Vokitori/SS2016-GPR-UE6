@@ -63,7 +63,7 @@ void Roboter::turnAround() {
 }
 
 const void Roboter::printRoboter() const {
-    cout << "Roboter[" << "c: " << color << ", x:" << x << ", y:" << y << ", d: " << getDirectionString(direction) << "]";
+    cout << "Roboter[" << "c: " << color << ", x:" << x << ", y:" << y << ", d: " << getDirectionString(direction) << ", s:" << stepCount << "]" << endl;
 }
 
 const Direction Roboter::getDirection() const {
@@ -73,6 +73,7 @@ const Direction Roboter::getDirection() const {
 const unsigned int Roboter::getStepCount() const {
     return stepCount;
 }
+
 const int Roboter::getColor() const {
     return color;
 }
@@ -90,22 +91,20 @@ Roboter_right::~Roboter_right() {
 
 }
 
-
 void Roboter_right::findExit(Maze* maze) {
     while (!maze->isFinished(this)) {
         action(maze);
         maze->print();
+        printRoboter();
         getchar();
     }
 }
 
 bool Roboter_right::action(Maze* maze) {
-    while (!maze->isFinished(this) && !maze->isRightEmpty(this) && moveForward(maze));
-    
-    cout << direction;
+    moveForward(maze);
     turnRight();
     if (!maze->isFrontEmpty(this));
-        turnAround();
+    turnAround();
 }
 
 

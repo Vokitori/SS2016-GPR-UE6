@@ -25,10 +25,9 @@ Maze::Maze(string filename) {
 
 void Maze::start() {
     for (int i = 0; i < roboterList.size(); i++) {
-        roboterList[i]->findExit(this);
-        cout << startX;
         roboterList[i]->x = startX;
         roboterList[i]->y = startY;
+        roboterList[i]->findExit(this);
     }
     print();
 }
@@ -38,9 +37,16 @@ void Maze::print() const {
     for (int y = 0; y < board.size(); y++) {
         c = (y == 0 || y == board.size() - 1) ? '#' : ' ';
         for (int x = 0; x < board[y].size(); x++) {
-            if (x == 0 || x == board[y].size() - 1)
-                printBlock(y, x, '#');
-            else printBlock(y, x, c);
+            bool occupied = false;
+            for (int i = 0; i < roboterList.size(); i++) {
+                if (roboterList[i]->x == x && roboterList[i]->y == y)
+                    occupied = true;
+            }
+            if (occupied)
+                printBlock(x, y, '@');
+            else if (x == 0 || x == board[y].size() - 1)
+                printBlock(x, y, '#');
+            else printBlock(x, y, c);
         }
         cout << termcolor::reset << endl;
     }
@@ -50,10 +56,10 @@ void Maze::print() const {
 }
 
 void Maze::mark(Roboter* roboter) {
-    if (board[roboter->x][roboter->y] == -1)
+    if (board[roboter->y][roboter->x] == -1)
         return;
-    if ((((unsigned int) board[roboter->x][roboter->y]) & ((unsigned int) roboter->getColor())) == (unsigned int) 0)
-        board[roboter->x][roboter->y] += roboter->getColor();
+    if ((((unsigned int) board[roboter->y][roboter->x]) & ((unsigned int) roboter->getColor())) == (unsigned int) 0)
+        board[roboter->y][roboter->x] += roboter->getColor();
 }
 
 const bool Maze::isFinished(Roboter * roboter) const {
@@ -62,11 +68,16 @@ const bool Maze::isFinished(Roboter * roboter) const {
 
 const bool Maze::isEmpty(Roboter* roboter, const int rx, const int ry) const {
     if (roboter->y + ry >= board.size() || roboter->y + ry < 0) {
+        cout << "FIX EUDA" << endl;
         return false;
     }
     if (roboter->x + rx >= board[roboter->y + ry].size() || roboter->x + rx < 0) {
+        cout << "SCHEIßE EUDA" << endl;
+
         return false;
     }
+    cout << "BAM EUDA" << endl;
+
     return board[roboter->y + ry][roboter->x + rx] != -1;
 }
 
@@ -134,11 +145,11 @@ const bool Maze::isRightEmpty(Roboter * roboter) const {
 }
 
 const int Maze::getIntAt(const int x, const int y) const {
-    return board[x][y];
+    return board[y][x];
 }
 
 const char Maze::printBlock(const int x, const int y, const char c) const {
-    int value = board[x][y];
+    int value = board[y][x];
     switch (value) {
         case -1:
             cout << termcolor::reset;
@@ -172,7 +183,7 @@ const char Maze::printBlock(const int x, const int y, const char c) const {
 }
 
 void Maze::setIntAt(const int x, const int y, const int value) {
-    board[x][y] = value;
+    board[y][x] = value;
 }
 
 void Maze::addLine(vector<int> line) {
@@ -180,39 +191,58 @@ void Maze::addLine(vector<int> line) {
 }
 
 void Maze::getStartAndEnd() {
-    bool cs = false, ce = false;
-    for (int y = 0; y < board[0].size(); y++) {
-        if (getIntAt(0, y) != 0) continue;
-        startX = 0;
-        startY = y;
-        cs = true;
-    }
-    if (!cs) {
-        int x = board[0].size() - 1;
-        for (int y = 0; y < board.size(); y++) {
-            if (getIntAt(y, x) != 0)continue;
-            startX = y;
-            startY = x;
-            cs = true;
+    startX = -1;
+    startY = -1;
+    endX = -1;
+    endY = -1;
+    int x = 0;
+    int y = 0;
+    for (x = 0; x < board[y].size() && x >= 0; x++) {
+        if (getIntAt(x, y) == 0) {
+            if (startX == -1) {
+                startX = x;
+                startY = y;
+            } else {
+                endX = x;
+                endY = y;
+                return;
+            }
         }
     }
-
-    int x = board[0].size() - 1;
-
-    for (int y = 0; y < board.size() - 1; y++) {
-        if (getIntAt(y, x) != 0) continue;
-        endX = y;
-        endY = x;
-        ce = true;
+    for (x--; y < board.size() && y >= 0; y++) {
+        if (getIntAt(x, y) == 0) {
+            if (startX == -1) {
+                startX = x;
+                startY = y;
+            } else {
+                endX = x;
+                endY = y;
+                return;
+            }
+        }
     }
-
-    if (!ce) {
-        int j = board.size() - 1;
-        for (int i = 0; i < board[0].size(); i++) {
-            if (getIntAt(j, i) != 0) continue;
-            endX = j;
-            endY = i;
-            ce = true;
+    for (y--; x < board[y].size() && x >= 0; x--) {
+        if (getIntAt(x, y) == 0) {
+            if (startX == -1) {
+                startX = x;
+                startY = y;
+            } else {
+                endX = x;
+                endY = y;
+                return;
+            }
+        }
+    }
+    for (x++; y < board.size() && y >= 0; y--) {
+        if (getIntAt(x, y) == 0) {
+            if (startX == -1) {
+                startX = x;
+                startY = y;
+            } else {
+                endX = x;
+                endY = y;
+                return;
+            }
         }
     }
 }

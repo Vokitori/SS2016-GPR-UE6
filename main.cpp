@@ -48,9 +48,8 @@ int main(int argc, char** argv) {
     Maze m4("maze_tests/maze4_braid.txt");
     Maze m5("maze_tests/maze5_cavern.txt");
     Roboter* roboter = new Roboter_right(1);
-    m3.roboterList.push_back(roboter);
-    m3.roboterList[0]->printRoboter();
-    m3.start();
+    m1.roboterList.push_back(roboter);
+    m1.start();
     return 0;
 }
 
