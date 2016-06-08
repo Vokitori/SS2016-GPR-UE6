@@ -5,6 +5,10 @@
 
 class Maze;
 
+enum Direction {
+    NORTH = 0, EAST = 1, SOUTH = 2, WEST = 4
+};
+
 class Roboter {
 public:
     Roboter(int color);
@@ -13,6 +17,7 @@ public:
     int steps = 0;
     int color;
     int x, y;
+    Direction direction = NORTH;
 private:
 
 };
