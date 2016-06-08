@@ -1,6 +1,8 @@
 #include "Roboter.h"
 
 #include "Maze.h"
+#include <chrono>
+#include <thread>
 
 Roboter::Roboter(int color) : color(color) {
 }
@@ -8,30 +10,33 @@ Roboter::Roboter(int color) : color(color) {
 Roboter::~Roboter() {
 }
 
-void Roboter::findExit(Maze maze) {
-
+void Roboter::findExit(Maze* maze) {
 }
 
-bool Roboter::action(Maze maze) {
-
+bool Roboter::action(Maze* maze) {
 }
 
-bool Roboter::moveForward(Maze maze) {
-    if (!maze.isFrontEmpty(this))
+bool Roboter::moveForward(Maze* maze) {
+    if (!maze->isFrontEmpty(this))
         return false;
     switch (direction) {
         case NORTH:
             y -= 1;
+            break;
         case SOUTH:
             y += 1;
+            break;
         case EAST:
             x += 1;
+            break;
         case WEST:
             x -= 1;
+            break;
         default:
             return false;
     }
     stepCount++;
+    maze->mark(this);
     return true;
 }
 
@@ -56,22 +61,21 @@ void Roboter::turnAround() {
     direction = (Direction) dir;
 }
 
+const void Roboter::printRoboter() const {
+    cout << "Roboter[" << "c: " << color << ", x:" << x << ", y:" << y << ", d: " << getDirectionString(direction) << "]";
+}
+
 const Direction Roboter::getDirection() const {
     return direction;
 }
 
-const int Roboter::getStepCount() const {
+const unsigned int Roboter::getStepCount() const {
     return stepCount;
 }
 
-const int Roboter::getX() const {
-    return x;
+const int Roboter::getColor() const {
+    return color;
 }
-
-const int Roboter::getY() const {
-    return y;
-}
-
 
 /*
  inherited robots
@@ -84,12 +88,19 @@ Roboter_right::~Roboter_right() {
 
 }
 
-void Roboter_right::findExit(Maze maze) {
-
+void Roboter_right::findExit(Maze* maze) {
+    while (!maze->isFinished(this)) {
+        action(maze);
+        maze->print();
+        getchar();
+    }
 }
 
-bool Roboter_right::action(Maze maze) {
-
+bool Roboter_right::action(Maze* maze) {
+    while (!maze->isFinished(this) && !maze->isRightEmpty(this) && moveForward(maze));
+    turnRight();
+    if (!maze->isFrontEmpty(this))
+        turnAround();
 }
 
 
@@ -99,11 +110,11 @@ Roboter_left::~Roboter_left() {
 
 }
 
-void Roboter_left::findExit(Maze maze) {
+void Roboter_left::findExit(Maze* maze) {
 
 }
 
-bool Roboter_left::action(Maze maze) {
+bool Roboter_left::action(Maze* maze) {
 
 }
 
@@ -114,11 +125,11 @@ Roboter_three::~Roboter_three() {
 
 }
 
-void Roboter_three::findExit(Maze maze) {
+void Roboter_three::findExit(Maze* maze) {
 
 }
 
-bool Roboter_three::action(Maze maze) {
+bool Roboter_three::action(Maze* maze) {
 
 }
 

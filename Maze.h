@@ -10,6 +10,9 @@ using namespace std;
 
 class Maze {
 public:
+
+    vector<Roboter*> roboterList;
+
     Maze(string filename);
     void start();
     const bool isFinished(const Roboter *roboter) const;
@@ -17,15 +20,16 @@ public:
     const bool isBackEmpty(const Roboter *roboter) const;
     const bool isLeftEmpty(const Roboter *roboter) const;
     const bool isRightEmpty(const Roboter *roboter) const;
-    vector<Roboter> roboterList;
-
+    void mark(const Roboter *roboter);
+    void print() const;
+    
 private:
     const char wall = '#';
     const char free = ' ';
     int startX = 0, startY = 0, endX = 0, endY = 0;
     vector<vector<int>> board;
 
-    void print() const;
+
     const bool isEmpty(const Roboter *roboter, const int rx, const int ry) const;
     void addLine(vector<int> line);
     const int getIntAt(const int x, const int y) const;

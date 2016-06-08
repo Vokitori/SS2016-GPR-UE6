@@ -9,12 +9,13 @@ using namespace std;
 
 int main(int argc, char** argv) {
    // string filename = argv[1];
-    
     Maze m1("maze_tests/maze1_small.txt");
     Maze m2("maze_tests/maze2_unicursal.txt");
     Maze m3("maze_tests/maze3_braid.txt");
     Maze m4("maze_tests/maze4_braid.txt");
     Maze m5("maze_tests/maze5_cavern.txt");
+    Roboter* roboter = new Roboter_right(1);
+    m3.roboterList.push_back(roboter);
     m3.start();
     return 0;
 }
@@ -29,7 +30,7 @@ int main(int argc, char** argv) {
  Parameter aus Commandline verwenden
  Maze.start() (Threads, Roboter starten)
  Tabelle Roboter stepCount
- Maze.markField(Roboter* r);
+ X Maze.markField(Roboter* r);
  
  */
 

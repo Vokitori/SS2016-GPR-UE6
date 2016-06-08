@@ -24,6 +24,11 @@ Maze::Maze(string filename) {
 }
 
 void Maze::start() {
+    for (int i = 0; i < roboterList.size(); i++) {
+        roboterList[i]->findExit(this);
+        roboterList[i]->x = startX;
+        roboterList[i]->y = startY;
+    }
     print();
 }
 
@@ -43,16 +48,23 @@ void Maze::print() const {
 
 }
 
-const bool Maze::isFinished(const Roboter * roboter) const {
+void Maze::mark(const Roboter* roboter) {
+    if (board[roboter->x][roboter->y] == -1)
+        return;
+    if ((((unsigned int) board[roboter->x][roboter->y]) & ((unsigned int) roboter->getColor())) == (unsigned int) 0)
+        board[roboter->x][roboter->y] += roboter->getColor();
+}
 
+const bool Maze::isFinished(const Roboter * roboter) const {
+    return endX == roboter->x && endY == roboter->y;
 }
 
 const bool Maze::isEmpty(const Roboter* roboter, const int rx, const int ry) const {
-    if (board[roboter->getX() + rx][roboter->getY() + ry] == -1) {
-        return true;
-    } else
-        return false;
-
+    if (roboter->y + ry >= board.size())
+        cout << "DAFUQ";
+    if (roboter->x + rx >= board[roboter->y + ry].size())
+        cout << "DAFACK";
+    return board[roboter->y + ry][roboter->x + rx] != -1;
 }
 
 const bool Maze::isFrontEmpty(const Roboter * roboter) const {
@@ -66,6 +78,7 @@ const bool Maze::isFrontEmpty(const Roboter * roboter) const {
         case WEST:
             return isEmpty(roboter, -1, 0);
         default:
+            cout << roboter->getDirection();
             return false;
     }
 }
