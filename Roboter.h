@@ -19,21 +19,19 @@ public:
 
     const int getX() const;
     const int getY() const;
-    const int getSteps() const;
+    const int getStepCount() const;
     const Direction getDirection() const;
 
 protected:
     int x, y;
-    int steps = 0;
+    int stepCount = 0;
     Direction direction;
-
+    
+    virtual bool action(Maze maze);
     bool moveForward(Maze maze);
     void turnLeft();
     void turnRight();
     void turnAround();
-
-private:
-
 };
 
 /*
@@ -47,7 +45,9 @@ public:
     };
     ~Roboter_right();
     void findExit(Maze maze) override;
+    
 protected:
+    bool action(Maze maze) override;
 
 private:
 
@@ -60,7 +60,9 @@ public:
     ;
     ~Roboter_left();
     void findExit(Maze maze) override;
+    
 protected:
+    bool action(Maze maze) override;
 
 private:
 
@@ -73,7 +75,9 @@ public:
     };
     ~Roboter_three();
     void findExit(Maze maze) override;
+    
 protected:
+    bool action(Maze maze) override;
 
 private:
 

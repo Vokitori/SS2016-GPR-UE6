@@ -15,7 +15,7 @@ int main(int argc, char** argv) {
     Maze m3("maze_tests/maze3_braid.txt");
     Maze m4("maze_tests/maze4_braid.txt");
     Maze m5("maze_tests/maze5_cavern.txt");
-    m1.start();
+    m3.start();
     return 0;
 }
 
