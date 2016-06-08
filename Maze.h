@@ -13,10 +13,10 @@ public:
     Maze(string filename);
     void start();
     const bool isFinished(const Roboter *roboter);
-    const bool isNorthEmpty(const Roboter *roboter);
-    const bool isSouthEmpty(const Roboter *roboter);
-    const bool isWestEmpty(const Roboter *roboter);
-    const bool isEastEmpty(const Roboter *roboter);
+    const bool isFrontEmpty(const Roboter *roboter);
+    const bool isBackEmpty(const Roboter *roboter);
+    const bool isLeftEmpty(const Roboter *roboter);
+    const bool isRightEmpty(const Roboter *roboter);
     vector<Roboter> roboterList;
 
 private:

@@ -25,7 +25,7 @@ public:
 protected:
     int x, y;
     int steps = 0;
-    Direction direction = NORTH;
+    Direction direction;
     
     bool moveForward(Maze maze);
     void turnLeft();

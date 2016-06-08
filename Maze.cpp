@@ -43,29 +43,72 @@ const bool Maze::isFinished(const Roboter* roboter) {
 }
 
 const bool Maze::isEmpty(const Roboter* roboter, const int rx, const int ry) {
-    if (board[roboter->x + rx][roboter->y + ry] == 0) {
+    if (board[roboter->x + rx][roboter->y + ry] == -1) {
         return true;
     } else
         return false;
 
 }
 
-const bool Maze::isNorthEmpty(const Roboter* roboter) {
-    return isEmpty(roboter, 0, -1);
+const bool Maze::isFrontEmpty(const Roboter* roboter) {
+    switch (roboter->direction) {
+NORTH:
+            return isEmpty(roboter, 0, -1);
+SOUTH:
+            return isEmpty(roboter, 0, 1);
+EAST:
+            return isEmpty(roboter, 1, 0);
+WEST:
+            return isEmpty(roboter, -1, 0);
+defaul:
+            return false;
+    }
 }
 
-const bool Maze::isSouthEmpty(const Roboter* roboter) {
-    return isEmpty(roboter, 0, 1);
+const bool Maze::isBackEmpty(const Roboter* roboter) {
+    switch (roboter->direction) {
+NORTH:
+            return isEmpty(roboter, 0, 1);
+SOUTH:
+            return isEmpty(roboter, 0, -1);
+EAST:
+            return isEmpty(roboter, -1, 0);
+WEST:
+            return isEmpty(roboter, 1, 0);
+defaul:
+            return false;
+    }
+}
+
+const bool Maze::isLeftEmpty(const Roboter* roboter) {
+    switch (roboter->direction) {
+NORTH:
+            return isEmpty(roboter, -1, 0);
+SOUTH:
+            return isEmpty(roboter, 1, 0);
+EAST:
+            return isEmpty(roboter, 0, -1);
+WEST:
+            return isEmpty(roboter, 0, 1);
+defaul:
+            return false;
+    }
 
 }
 
-const bool Maze::isWestEmpty(const Roboter* roboter) {
-    return isEmpty(roboter, -1, 0);
-
-}
-
-const bool Maze::isEastEmpty(const Roboter* roboter) {
-    return isEmpty(roboter, 1, 0);
+const bool Maze::isRightEmpty(const Roboter* roboter) {
+    switch (roboter->direction) {
+NORTH:
+            return isEmpty(roboter, 1, 0);
+SOUTH:
+            return isEmpty(roboter, -1, 0);
+EAST:
+            return isEmpty(roboter, 0, 1);
+WEST:
+            return isEmpty(roboter, 0, -1);
+defaul:
+            return false;
+    }
 
 }
 
