@@ -68,16 +68,11 @@ const bool Maze::isFinished(Roboter * roboter) const {
 
 const bool Maze::isEmpty(Roboter* roboter, const int rx, const int ry) const {
     if (roboter->y + ry >= board.size() || roboter->y + ry < 0) {
-        cout << "FIX EUDA" << endl;
         return false;
     }
     if (roboter->x + rx >= board[roboter->y + ry].size() || roboter->x + rx < 0) {
-        cout << "SCHEIßE EUDA" << endl;
-
         return false;
     }
-    cout << "BAM EUDA" << endl;
-
     return board[roboter->y + ry][roboter->x + rx] != -1;
 }
 
