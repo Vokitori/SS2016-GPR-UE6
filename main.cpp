@@ -8,33 +8,37 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-//    int stupidTest = 0;
-//    if (argc != 1) {
-//        string mazeName = argv[1];
-//        Maze *maze = new Maze(mazeName);
-//
-//        for (int i = 1; i < argc; i++) {
-//            switch (argv[i][2]) {
-//                case '1':{
-//                    Roboter * r1 = new Roboter_left(1);
-//                    maze->roboterList.push_back(r1);
-//                    maze->roboterList[0]->printRoboter();
-//                }
-//                    break;
-//                case '2':{
-//                    
-//                }
-//                    break;
-//                case '3':{
-//                    
-//                }
-//                    break;
-//                default:
-//                    continue;
-//            }
-//
-//        }
-//    }
+//////////////////////////////    int stupidTest = 0;
+//////////////////////////////    if (argc != 1) {
+//////////////////////////////        string mazeName = argv[1];
+//////////////////////////////        Maze *maze = new Maze(mazeName);
+//////////////////////////////
+//////////////////////////////        for (int i = 1; i < argc; i++) {
+//////////////////////////////            switch (argv[i][2]) {
+//////////////////////////////                case '1':{
+//////////////////////////////                    Roboter * r1 = new Roboter_right(1);
+//////////////////////////////                    maze->roboterList.push_back(r1);
+//////////////////////////////                    maze->roboterList[0]->printRoboter();
+//////////////////////////////                }
+//////////////////////////////                    break;
+//////////////////////////////                case '2':{
+//////////////////////////////                    Roboter * r2 = new Roboter_left(2);
+//////////////////////////////                    maze->roboterList.push_back(r2);
+//////////////////////////////                    maze->roboterList[0]->printRoboter();
+//////////////////////////////                }
+//////////////////////////////                    break;
+//////////////////////////////                case '3':{
+//////////////////////////////                    Roboter * r3 = new Roboter_right(3);
+//////////////////////////////                    maze->roboterList.push_back(r3);
+//////////////////////////////                    maze->roboterList[0]->printRoboter();
+//////////////////////////////                }
+//////////////////////////////                    break;
+//////////////////////////////                default:
+//////////////////////////////                    continue;
+//////////////////////////////            }
+//////////////////////////////
+//////////////////////////////        }
+//////////////////////////////    }
 
 
    // string filename = argv[1];
@@ -45,6 +49,7 @@ int main(int argc, char** argv) {
     Maze m5("maze_tests/maze5_cavern.txt");
     Roboter* roboter = new Roboter_right(1);
     m3.roboterList.push_back(roboter);
+    m3.roboterList[0]->printRoboter();
     m3.start();
     return 0;
 }
