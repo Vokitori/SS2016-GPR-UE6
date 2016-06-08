@@ -2,11 +2,6 @@
 
 #include "Maze.h"
 
-Roboter::Roboter() {
-
-}
-
-
 Roboter::Roboter(int color) : color(color) {
 }
 
