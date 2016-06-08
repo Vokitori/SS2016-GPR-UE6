@@ -11,27 +11,27 @@ enum Direction {
 
 class Roboter {
 public:
-    int color;    
-    
+    int color;
+
     Roboter(int color);
     virtual ~Roboter();
     virtual void findExit(Maze maze);
-    
-    int getX();
-    int getY();
-    int getSteps();
-    Direction getDirection();
-    
+
+    const int getX() const;
+    const int getY() const;
+    const int getSteps() const;
+    const Direction getDirection() const;
+
 protected:
     int x, y;
     int steps = 0;
     Direction direction;
-    
+
     bool moveForward(Maze maze);
     void turnLeft();
     void turnRight();
     void turnAround();
-    
+
 private:
 
 };

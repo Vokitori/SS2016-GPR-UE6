@@ -16,33 +16,39 @@ bool Roboter::moveForward(Maze maze) {
 }
 
 void Roboter::turnLeft() {
-    direction += 3;
-    direction %= 4;
+    int dir = direction;
+    dir += 3;
+    dir %= 4;
+    direction = (Direction) dir;
 }
 
 void Roboter::turnRight() {
-    direction += 1;
-    direction %= 4;
+    int dir = direction;
+    dir += 1;
+    dir %= 4;
+    direction = (Direction) dir;
 }
 
 void Roboter::turnAround() {
-    direction += 2;
-    direction %= 4;
+    int dir = direction;
+    dir += 2;
+    dir %= 4;
+    direction = (Direction) dir;
 }
 
-Direction Roboter::getDirection() {
+const Direction Roboter::getDirection() const {
     return direction;
 }
 
-int Roboter::getSteps() {
+const int Roboter::getSteps() const {
     return steps;
 }
 
-int Roboter::getX() {
+const int Roboter::getX() const {
     return x;
 }
 
-int Roboter::getY() {
+const int Roboter::getY() const {
     return y;
 }
 
