@@ -12,11 +12,10 @@ enum Direction {
 class Roboter {
 public:
     int color;
-
     Roboter(int color);
     virtual ~Roboter();
     virtual void findExit(Maze maze);
-
+    virtual void testString();
     const int getX() const;
     const int getY() const;
     const int getStepCount() const;
@@ -40,9 +39,10 @@ protected:
 
 class Roboter_right : public Roboter {
 public:
-
     Roboter_right(int color) : Roboter(color) {
     };
+    void testString() override;
+
     ~Roboter_right();
     void findExit(Maze maze) override;
     

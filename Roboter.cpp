@@ -1,5 +1,5 @@
 #include "Roboter.h"
-
+#include <iostream>
 #include "Maze.h"
 
 Roboter::Roboter(int color) : color(color) {
@@ -91,6 +91,11 @@ void Roboter_right::findExit(Maze maze) {
 bool Roboter_right::action(Maze maze) {
 
 }
+
+void Roboter::testString() {
+    std::cout<<"vererbung geht"<<std::endl;
+}
+
 
 
 //second robot "Roboter_left"

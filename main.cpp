@@ -8,8 +8,35 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-   // string filename = argv[1];
-    
+    int stupidTest = 0;
+    if (argc != 1) {
+        string mazeName = argv[1];
+        Maze *maze = new Maze(mazeName);
+
+        for (int i = 1; i < argc; i++) {
+            switch (argv[i][2]) {
+                case '1':{
+                    Roboter * r1 = new Roboter_left(1);
+                    maze->roboterList.push_back(r1);
+                    maze->roboterList[0].testString();
+                }
+                    break;
+                case '2':{
+                    
+                }
+                    break;
+                case '3':{
+                    
+                }
+                    break;
+                default:
+                    continue;
+            }
+
+        }
+    }
+
+
     Maze m1("maze_tests/maze1_small.txt");
     Maze m2("maze_tests/maze2_unicursal.txt");
     Maze m3("maze_tests/maze3_braid.txt");
