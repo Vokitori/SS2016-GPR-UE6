@@ -2,32 +2,39 @@
 #define ROBOTER_H
 
 #include <thread>
-
+#include <string>
 class Maze;
 
 enum Direction {
-    NORTH = 0, EAST = 1, SOUTH = 2, WEST = 4
+    NORTH = 0, EAST = 1, SOUTH = 2, WEST = 3
 };
+
+static std::string getDirectionString(Direction dir) {
+    const std::string directionStrings[] = {"N", "E", "S", "W"};
+    return directionStrings[dir];
+}
 
 class Roboter {
 public:
-    int color;
+    
+    unsigned int x,y;
+    
     Roboter(int color);
     virtual ~Roboter();
-    virtual void findExit(Maze maze);
-    virtual void testString();
-    const int getX() const;
-    const int getY() const;
-    const int getStepCount() const;
+    virtual void findExit(Maze *maze);
+    
+    const unsigned int getStepCount() const;
     const Direction getDirection() const;
+    const int getColor() const;
+    const void printRoboter() const;
 
 protected:
-    int x, y;
-    int stepCount = 0;
-    Direction direction;
-    
-    virtual bool action(Maze maze);
-    bool moveForward(Maze maze);
+    unsigned int stepCount = 0;
+    int color;
+    Direction direction = SOUTH;
+
+    virtual bool action(Maze* maze);
+    bool moveForward(Maze* maze);
     void turnLeft();
     void turnRight();
     void turnAround();
@@ -41,13 +48,12 @@ class Roboter_right : public Roboter {
 public:
     Roboter_right(int color) : Roboter(color) {
     };
-    void testString() override;
 
     ~Roboter_right();
-    void findExit(Maze maze) override;
-    
+    void findExit(Maze* maze) override;
+
 protected:
-    bool action(Maze maze) override;
+    bool action(Maze* maze) override;
 
 private:
 
@@ -56,13 +62,13 @@ private:
 class Roboter_left : public Roboter {
 public:
 
-    Roboter_left(int color);
-    ;
+    Roboter_left(int color) : Roboter(color) {
+    };
     ~Roboter_left();
-    void findExit(Maze maze) override;
-    
+    void findExit(Maze* maze) override;
+
 protected:
-    bool action(Maze maze) override;
+    bool action(Maze* maze) override;
 
 private:
 
@@ -74,10 +80,10 @@ public:
     Roboter_three(int color) : Roboter(color) {
     };
     ~Roboter_three();
-    void findExit(Maze maze) override;
-    
+    void findExit(Maze* maze) override;
+
 protected:
-    bool action(Maze maze) override;
+    bool action(Maze* maze) override;
 
 private:
 
