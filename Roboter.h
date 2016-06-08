@@ -11,13 +11,27 @@ enum Direction {
 
 class Roboter {
 public:
+    int color;    
+    
     Roboter(int color);
     virtual ~Roboter();
-    virtual void findExit();
-    int steps = 0;
-    int color;
+    virtual void findExit(Maze maze);
+    
+    int getX();
+    int getY();
+    int getSteps();
+    Direction getDirection();
+    
+protected:
     int x, y;
+    int steps = 0;
     Direction direction = NORTH;
+    
+    bool moveForward(Maze maze);
+    void turnLeft();
+    void turnRight();
+    void turnAround();
+    
 private:
 
 };
@@ -32,7 +46,9 @@ public:
     Roboter_right(int color) : Roboter(color) {
     };
     ~Roboter_right();
-    void findExit() override;
+    void findExit(Maze maze) override;
+protected:
+
 private:
 
 };
@@ -40,10 +56,12 @@ private:
 class Roboter_left : public Roboter {
 public:
 
-    Roboter_left(int color) : Roboter(color) {
-    };
+    Roboter_left(int color);
+    ;
     ~Roboter_left();
-    void findExit() override;
+    void findExit(Maze maze) override;
+protected:
+
 private:
 
 };
@@ -54,7 +72,9 @@ public:
     Roboter_three(int color) : Roboter(color) {
     };
     ~Roboter_three();
-    void findExit() override;
+    void findExit(Maze maze) override;
+protected:
+
 private:
 
 };
