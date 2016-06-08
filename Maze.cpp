@@ -12,12 +12,13 @@ Maze::Maze(string filename) {
         vector<int> newLine;
         for (int i = 0; i < nextLine.length(); i++) {
             if (nextLine[i] == ' ') {
-                newLine.push_back(-1);
-            } else if (nextLine[i] == '#') {
                 newLine.push_back(0);
+            } else if (nextLine[i] == '#') {
+                newLine.push_back(-1);
             }
         }
-        addLine(newLine);
+        if (newLine.size() != 0)
+            addLine(newLine);
     }
     getStartAndEnd();
 }
@@ -26,97 +27,101 @@ void Maze::start() {
     print();
 }
 
-void Maze::print() {
+void Maze::print() const {
+    char c = ' ';
     for (int y = 0; y < board.size(); y++) {
+        c = (y == 0 || y == board.size() - 1) ? '#' : ' ';
         for (int x = 0; x < board[y].size(); x++) {
-            printBlock(y, x);
+            if (x == 0 || x == board[y].size() - 1)
+                printBlock(y, x, '#');
+            else printBlock(y, x, c);
         }
-        cout << endl;
+        cout << termcolor::reset << endl;
     }
     cout << "Start: <" << startX << ", " << startY << "> " << endl;
     cout << "End: <" << endX << ", " << endY << "> " << endl;
 
 }
 
-const bool Maze::isFinished(const Roboter* roboter) {
+const bool Maze::isFinished(const Roboter * roboter) const {
 
 }
 
-const bool Maze::isEmpty(const Roboter* roboter, const int rx, const int ry) {
-    if (board[roboter->x + rx][roboter->y + ry] == -1) {
+const bool Maze::isEmpty(const Roboter* roboter, const int rx, const int ry) const {
+    if (board[roboter->getX() + rx][roboter->getY() + ry] == -1) {
         return true;
     } else
         return false;
 
 }
 
-const bool Maze::isFrontEmpty(const Roboter* roboter) {
-    switch (roboter->direction) {
-NORTH:
+const bool Maze::isFrontEmpty(const Roboter * roboter) const {
+    switch (roboter->getDirection()) {
+        case NORTH:
             return isEmpty(roboter, 0, -1);
-SOUTH:
+        case SOUTH:
             return isEmpty(roboter, 0, 1);
-EAST:
+        case EAST:
             return isEmpty(roboter, 1, 0);
-WEST:
+        case WEST:
             return isEmpty(roboter, -1, 0);
-defaul:
+        default:
             return false;
     }
 }
 
-const bool Maze::isBackEmpty(const Roboter* roboter) {
-    switch (roboter->direction) {
-NORTH:
+const bool Maze::isBackEmpty(const Roboter * roboter) const {
+    switch (roboter->getDirection()) {
+        case NORTH:
             return isEmpty(roboter, 0, 1);
-SOUTH:
+        case SOUTH:
             return isEmpty(roboter, 0, -1);
-EAST:
+        case EAST:
             return isEmpty(roboter, -1, 0);
-WEST:
+        case WEST:
             return isEmpty(roboter, 1, 0);
-defaul:
+        default:
             return false;
     }
 }
 
-const bool Maze::isLeftEmpty(const Roboter* roboter) {
-    switch (roboter->direction) {
-NORTH:
+const bool Maze::isLeftEmpty(const Roboter * roboter) const {
+    switch (roboter->getDirection()) {
+        case NORTH:
             return isEmpty(roboter, -1, 0);
-SOUTH:
+        case SOUTH:
             return isEmpty(roboter, 1, 0);
-EAST:
+        case EAST:
             return isEmpty(roboter, 0, -1);
-WEST:
+        case WEST:
             return isEmpty(roboter, 0, 1);
-defaul:
-            return false;
-    }
-
-}
-
-const bool Maze::isRightEmpty(const Roboter* roboter) {
-    switch (roboter->direction) {
-NORTH:
-            return isEmpty(roboter, 1, 0);
-SOUTH:
-            return isEmpty(roboter, -1, 0);
-EAST:
-            return isEmpty(roboter, 0, 1);
-WEST:
-            return isEmpty(roboter, 0, -1);
-defaul:
+        default:
             return false;
     }
 
 }
 
-const int Maze::getIntAt(const int x, const int y) {
+const bool Maze::isRightEmpty(const Roboter * roboter) const {
+    switch (roboter->getDirection()) {
+        case NORTH:
+            return isEmpty(roboter, 1, 0);
+        case SOUTH:
+            return isEmpty(roboter, -1, 0);
+        case EAST:
+            return isEmpty(roboter, 0, 1);
+        case WEST:
+            return isEmpty(roboter, 0, -1);
+        default:
+            return false;
+    }
+
+}
+
+const int Maze::getIntAt(const int x, const int y) const {
     return board[x][y];
 }
 
-const char Maze::printBlock(const int x, const int y) {
+const char Maze::printBlock(const int x, const int y, const char c) const {
     int value = board[x][y];
     switch (value) {
         case -1:
@@ -147,7 +152,7 @@ const char Maze::printBlock(const int x, const int y) {
             cout << termcolor::on_grey;
             break;
     }
-    cout << " ";
+    cout << c;
 }
 
 void Maze::setIntAt(const int x, const int y, const int value) {
@@ -186,7 +191,7 @@ void Maze::getStartAndEnd() {
     }
 
     if (!ce) {
-        int j = board.size() - 2;
+        int j = board.size() - 1;
         for (int i = 0; i < board[0].size(); i++) {
             if (getIntAt(j, i) != 0) continue;
             endX = j;

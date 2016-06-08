@@ -12,11 +12,11 @@ class Maze {
 public:
     Maze(string filename);
     void start();
-    const bool isFinished(const Roboter *roboter);
-    const bool isFrontEmpty(const Roboter *roboter);
-    const bool isBackEmpty(const Roboter *roboter);
-    const bool isLeftEmpty(const Roboter *roboter);
-    const bool isRightEmpty(const Roboter *roboter);
+    const bool isFinished(const Roboter *roboter) const;
+    const bool isFrontEmpty(const Roboter *roboter) const;
+    const bool isBackEmpty(const Roboter *roboter) const;
+    const bool isLeftEmpty(const Roboter *roboter) const;
+    const bool isRightEmpty(const Roboter *roboter) const;
     vector<Roboter> roboterList;
 
 private:
@@ -25,11 +25,11 @@ private:
     int startX = 0, startY = 0, endX = 0, endY = 0;
     vector<vector<int>> board;
 
-    void print();
-    const bool isEmpty(const Roboter *roboter, const int rx, const int ry);
+    void print() const;
+    const bool isEmpty(const Roboter *roboter, const int rx, const int ry) const;
     void addLine(vector<int> line);
-    const int getIntAt(const int x, const int y);
-    const char printBlock(const int x, const int y);
+    const int getIntAt(const int x, const int y) const;
+    const char printBlock(const int x, const int y, const char c = ' ') const;
     void setIntAt(const int x, const int y, const int value);
     void getStartAndEnd();
 };
