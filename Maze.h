@@ -15,14 +15,14 @@ public:
 
     Maze(string filename);
     void start();
-    const bool isFinished(const Roboter *roboter) const;
-    const bool isFrontEmpty(const Roboter *roboter) const;
-    const bool isBackEmpty(const Roboter *roboter) const;
-    const bool isLeftEmpty(const Roboter *roboter) const;
-    const bool isRightEmpty(const Roboter *roboter) const;
-    void mark(const Roboter *roboter);
+    const bool isFinished(Roboter *roboter) const;
+    const bool isFrontEmpty(Roboter *roboter) const;
+    const bool isBackEmpty(Roboter *roboter) const;
+    const bool isLeftEmpty(Roboter *roboter) const;
+    const bool isRightEmpty(Roboter *roboter) const;
+    void mark(Roboter *roboter);
     void print() const;
-    
+
 private:
     const char wall = '#';
     const char free = ' ';
@@ -30,7 +30,7 @@ private:
     vector<vector<int>> board;
 
 
-    const bool isEmpty(const Roboter *roboter, const int rx, const int ry) const;
+    const bool isEmpty(Roboter *roboter, const int rx, const int ry) const;
     void addLine(vector<int> line);
     const int getIntAt(const int x, const int y) const;
     const char printBlock(const int x, const int y, const char c = ' ') const;

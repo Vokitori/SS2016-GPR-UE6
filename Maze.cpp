@@ -26,6 +26,7 @@ Maze::Maze(string filename) {
 void Maze::start() {
     for (int i = 0; i < roboterList.size(); i++) {
         roboterList[i]->findExit(this);
+        cout << startX;
         roboterList[i]->x = startX;
         roboterList[i]->y = startY;
     }
@@ -48,26 +49,28 @@ void Maze::print() const {
 
 }
 
-void Maze::mark(const Roboter* roboter) {
+void Maze::mark(Roboter* roboter) {
     if (board[roboter->x][roboter->y] == -1)
         return;
     if ((((unsigned int) board[roboter->x][roboter->y]) & ((unsigned int) roboter->getColor())) == (unsigned int) 0)
         board[roboter->x][roboter->y] += roboter->getColor();
 }
 
-const bool Maze::isFinished(const Roboter * roboter) const {
+const bool Maze::isFinished(Roboter * roboter) const {
     return endX == roboter->x && endY == roboter->y;
 }
 
-const bool Maze::isEmpty(const Roboter* roboter, const int rx, const int ry) const {
-    if (roboter->y + ry >= board.size())
-        cout << "DAFUQ";
-    if (roboter->x + rx >= board[roboter->y + ry].size())
-        cout << "DAFACK";
+const bool Maze::isEmpty(Roboter* roboter, const int rx, const int ry) const {
+    if (roboter->y + ry >= board.size() || roboter->y + ry < 0) {
+        return false;
+    }
+    if (roboter->x + rx >= board[roboter->y + ry].size() || roboter->x + rx < 0) {
+        return false;
+    }
     return board[roboter->y + ry][roboter->x + rx] != -1;
 }
 
-const bool Maze::isFrontEmpty(const Roboter * roboter) const {
+const bool Maze::isFrontEmpty(Roboter * roboter) const {
     switch (roboter->getDirection()) {
         case NORTH:
             return isEmpty(roboter, 0, -1);
@@ -83,7 +86,7 @@ const bool Maze::isFrontEmpty(const Roboter * roboter) const {
     }
 }
 
-const bool Maze::isBackEmpty(const Roboter * roboter) const {
+const bool Maze::isBackEmpty(Roboter * roboter) const {
     switch (roboter->getDirection()) {
         case NORTH:
             return isEmpty(roboter, 0, 1);
@@ -98,7 +101,7 @@ const bool Maze::isBackEmpty(const Roboter * roboter) const {
     }
 }
 
-const bool Maze::isLeftEmpty(const Roboter * roboter) const {
+const bool Maze::isLeftEmpty(Roboter * roboter) const {
     switch (roboter->getDirection()) {
         case NORTH:
             return isEmpty(roboter, -1, 0);
@@ -114,7 +117,7 @@ const bool Maze::isLeftEmpty(const Roboter * roboter) const {
 
 }
 
-const bool Maze::isRightEmpty(const Roboter * roboter) const {
+const bool Maze::isRightEmpty(Roboter * roboter) const {
     switch (roboter->getDirection()) {
         case NORTH:
             return isEmpty(roboter, 1, 0);

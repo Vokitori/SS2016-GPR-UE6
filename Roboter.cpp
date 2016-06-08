@@ -101,8 +101,10 @@ void Roboter_right::findExit(Maze* maze) {
 
 bool Roboter_right::action(Maze* maze) {
     while (!maze->isFinished(this) && !maze->isRightEmpty(this) && moveForward(maze));
+    
+    cout << direction;
     turnRight();
-    if (!maze->isFrontEmpty(this))
+    if (!maze->isFrontEmpty(this));
         turnAround();
 }
 
