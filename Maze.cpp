@@ -50,21 +50,21 @@ const bool Maze::isEmpty(const Roboter* roboter, const int rx, const int ry) {
 
 }
 
-const bool Maze::isNorthEmpty(const Roboter* roboter) {
+const bool Maze::isFrontEmpty(const Roboter* roboter) {
     return isEmpty(roboter, 0, -1);
 }
 
-const bool Maze::isSouthEmpty(const Roboter* roboter) {
+const bool Maze::isBackEmpty(const Roboter* roboter) {
     return isEmpty(roboter, 0, 1);
 
 }
 
-const bool Maze::isWestEmpty(const Roboter* roboter) {
+const bool Maze::isLeftEmpty(const Roboter* roboter) {
     return isEmpty(roboter, -1, 0);
 
 }
 
-const bool Maze::isEastEmpty(const Roboter* roboter) {
+const bool Maze::isRightEmpty(const Roboter* roboter) {
     return isEmpty(roboter, 1, 0);
 
 }
