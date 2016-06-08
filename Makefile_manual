@@ -1,0 +1,17 @@
+all: labrob
+
+labrob: labrob.o 
+		g++ labrob.o Maze.o Roboter.o -o labrob
+	
+labrob.o: labrob.cpp Maze.o Roboter.o
+		g++ -c labrob.cpp
+
+Maze.o: Maze.h Maze.cpp Roboter.h
+		g++ -c Maze.cpp dist/tmp/Maze.o
+
+Roboter.o: Roboter.h Roboter.cpp Maze.h
+		g++ -c Roboter.cpp dist/tmp/Roboter.o
+	
+
+clean:
+	rm *.o labrob
