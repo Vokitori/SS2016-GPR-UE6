@@ -153,7 +153,9 @@ void Maze::printStartEnd() const {
 }
 
 void Maze::printStepTable() const {
-
+    for (int i = 0; i < roboterList.size(); i++) {
+        cout << "Robot number "<< (i+1) << " had to walk " << roboterList[i]->getStepCount() << " steps to victory." << endl;
+    }
 }
 
 const char Maze::printBlock(const int x, const int y, const char c) const {
