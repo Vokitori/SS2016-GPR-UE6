@@ -1,16 +1,16 @@
 all: labrob
 
 labrob: labrob.o 
-		g++ labrob.o Maze.o Roboter.o -o labrob
+		g++ labrob.o Maze.o Roboter.o -o labrob -lpthread -pthread -Wl,--no-as-needed -g -std=c++11
 	
 labrob.o: labrob.cpp Maze.o Roboter.o
-		g++ -c labrob.cpp
+		g++ -c labrob.cpp -o labrob.o -lpthread -pthread -Wl,--no-as-needed -g -std=c++11
 
 Maze.o: Maze.h Maze.cpp Roboter.h
-		g++ -c Maze.cpp dist/tmp/Maze.o
+		g++ -c Maze.cpp -o Maze.o -lpthread -pthread -Wl,--no-as-needed -g -std=c++11
 
 Roboter.o: Roboter.h Roboter.cpp Maze.h
-		g++ -c Roboter.cpp dist/tmp/Roboter.o
+		g++ -c Roboter.cpp -o Roboter.o -lpthread -pthread -Wl,--no-as-needed -g -std=c++11
 	
 
 clean:
