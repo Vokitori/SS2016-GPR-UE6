@@ -50,8 +50,8 @@ void Maze::print() const {
         }
         cout << termcolor::reset << endl;
     }
-    cout << "Start: <" << startX << ", " << startY << "> " << endl;
-    cout << "End: <" << endX << ", " << endY << "> " << endl;
+    cout << "Start: [" << startX << ", " << startY << "] " << endl;
+    cout << "End: [" << endX << ", " << endY << "] " << endl;
 
 }
 

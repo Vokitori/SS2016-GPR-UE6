@@ -4,15 +4,19 @@
 
 #include <string>
 #include "Maze.h"
+#include <fstream>
 
 using namespace std;
 
 int main(int argc, char** argv) {
-    int stupidTest = 0;
     if (argc != 1) {
         string mazeName = argv[1];
+        if(!ifstream(mazeName)){
+            cout << "File does not exist!" << endl;
+            return -1;
+        }
         Maze *maze = new Maze(mazeName);
-
+        bool helpmode = false;
         for (int i = 1; i < argc; i++) {
             if (argv[i][0] != '-')
                 continue;
@@ -39,27 +43,34 @@ int main(int argc, char** argv) {
                     default:
                         break;
                 }
-            if (argv[i][1] == 'h') {
-                cout << "Usage:" << endl;
-                cout << "labrob <filename> [-t*][-h]" << endl;
-                cout << "<filename>     path to map including filename" << endl;
-                cout << "[-t*]          select robots, multiple at the same time allowed" << endl;
-                cout << "                   * is an integer between 1 and 3" << endl;
-                cout << "                   1 is rightbot (default), 2 is leftbot, 3 is advancedbot" << endl;
-                cout << "[-h]           helptext" << endl;
-            }
+            if (argv[i][1] == 'h')
+                helpmode = true;
 
         }
-        maze->start();
+        if (helpmode) {
+            cout << "Usage:" << endl;
+            cout << "labrob <filename> [-t*][-h]" << endl;
+            cout << "<filename>     path to map including filename" << endl;
+            cout << "[-t*]          select robots, multiple at the same time allowed" << endl;
+            cout << "                   * is an integer between 1 and 3" << endl;
+            cout << "                   1 is rightbot (default), 2 is leftbot, 3 is advancedbot" << endl;
+            cout << "[-h]           helptext" << endl;
+        } else {
+            if (maze->roboterList.size() == 0) {
+                Roboter * r1 = new Roboter_right(1);
+                maze->roboterList.push_back(r1);
+            }
+            maze->start();
+        }
     }
 
 
     // string filename = argv[1];
-    Maze m1("maze_tests/maze1_small.txt");
-    Maze m2("maze_tests/maze2_unicursal.txt");
-    Maze m3("maze_tests/maze3_braid.txt");
-    Maze m4("maze_tests/maze4_braid.txt");
-    Maze m5("maze_tests/maze5_cavern.txt");
+    //Maze m1("maze_tests/maze1_small.txt");
+   // Maze m2("maze_tests/maze2_unicursal.txt");
+   // Maze m3("maze_tests/maze3_braid.txt");
+   // Maze m4("maze_tests/maze4_braid.txt");
+   // Maze m5("maze_tests/maze5_cavern.txt");
     // Roboter* r1 = new Roboter_right(1);
     // Roboter* r2 = new Roboter_left(2);
 
@@ -82,8 +93,8 @@ int main(int argc, char** argv) {
  Tabelle Roboter stepCount
  X Maze.markField(Roboter* r);
  Memleaks finden und fixen
- Input validieren
- Helptext
+ X Input validieren
+ X Helptext
  
  */
 
