@@ -101,6 +101,8 @@ void Roboter_right::findExit(Maze* maze) {
 }
 
 bool Roboter_right::action(Maze* maze) {
+ //   cout << "R";
+ //   getchar();
     if (maze->isRightEmpty(this))
         turnRight();
     else if (maze->isFrontEmpty(this));
@@ -129,6 +131,7 @@ void Roboter_left::findExit(Maze* maze) {
 }
 
 bool Roboter_left::action(Maze* maze) {
+ //   cout << "L";
     if (maze->isLeftEmpty(this))
         turnLeft();
     else if (maze->isFrontEmpty(this));

@@ -89,12 +89,14 @@ int main(int argc, char** argv) {
  X Roboter 2
  Roboter 3
  X Parameter aus Commandline verwenden
- Maze.start() (Threads, Roboter starten)
+ X Maze.start() (Threads, Roboter starten)
  Tabelle Roboter stepCount
  X Maze.markField(Roboter* r);
- Memleaks finden und fixen
+ X Memleaks finden und fixen
  X Input validieren
  X Helptext
+ Kommentare
+ Readme
  
  */
 

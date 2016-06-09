@@ -1,6 +1,4 @@
 #include "Maze.h"
-#include <fstream>
-#include "termcolor.h"
 
 using namespace std;
 
@@ -18,53 +16,45 @@ Maze::Maze(string filename) {
             }
         }
         if (newLine.size() != 0)
-            addLine(newLine);
+            board.push_back(newLine);
     }
-    getStartAndEnd();
+    determineStartAndEndPoint();
+}
+
+void startRobot(Roboter* roboter, Maze* maze, int startX, int startY) {
+    roboter->x = startX;
+    roboter->y = startY;
+    roboter->findExit(maze);
 }
 
 void Maze::start() {
+    vector<thread*> freds;
     for (int i = 0; i < roboterList.size(); i++) {
-        roboterList[i]->x = startX;
-        roboterList[i]->y = startY;
-        roboterList[i]->findExit(this);
+        freds.push_back(new thread(startRobot, roboterList[i], this, startX, startY));
     }
-    print();
-}
-
-void Maze::print() const {
-    char c = ' ';
-    for (int y = 0; y < board.size(); y++) {
-        c = (y == 0 || y == board.size() - 1) ? '#' : ' ';
-        for (int x = 0; x < board[y].size(); x++) {
-            bool occupied = false;
-            for (int i = 0; i < roboterList.size(); i++) {
-                if (roboterList[i]->x == x && roboterList[i]->y == y)
-                    occupied = true;
-            }
-            if (occupied)
-                printBlock(x, y, '@');
-            else if (x == 0 || x == board[y].size() - 1)
-                printBlock(x, y, '#');
-            else printBlock(x, y, c);
-        }
-        cout << termcolor::reset << endl;
+    for (int i = 0; i < freds.size(); i++) {
+        freds[i]->join();
+        delete freds[i];
     }
-    cout << "Start: [" << startX << ", " << startY << "] " << endl;
-    cout << "End: [" << endX << ", " << endY << "] " << endl;
-
+    printBoard();
+    printStartEnd();
+    printStepTable();
 }
 
 void Maze::mark(Roboter* roboter) {
+    m_mark.lock();
     if (board[roboter->y][roboter->x] == -1)
         return;
     if ((((unsigned int) board[roboter->y][roboter->x]) & ((unsigned int) roboter->getColor())) == (unsigned int) 0)
         board[roboter->y][roboter->x] += roboter->getColor();
+    m_mark.unlock();
 }
 
 const bool Maze::isFinished(Roboter * roboter) const {
     return endX == roboter->x && endY == roboter->y;
 }
+
+// <editor-fold defaultstate="collapsed" desc="bool isXXXEmpty(Roboter * roboter)">
 
 const bool Maze::isEmpty(Roboter* roboter, const int rx, const int ry) const {
     if (roboter->y + ry >= board.size() || roboter->y + ry < 0) {
@@ -120,7 +110,6 @@ const bool Maze::isLeftEmpty(Roboter * roboter) const {
         default:
             return false;
     }
-
 }
 
 const bool Maze::isRightEmpty(Roboter * roboter) const {
@@ -136,11 +125,35 @@ const bool Maze::isRightEmpty(Roboter * roboter) const {
         default:
             return false;
     }
+}// </editor-fold>
 
+void Maze::printBoard() const {
+    char c = ' ';
+    for (int y = 0; y < board.size(); y++) {
+        c = (y == 0 || y == board.size() - 1) ? '#' : ' ';
+        for (int x = 0; x < board[y].size(); x++) {
+            bool occupied = false;
+            for (int i = 0; i < roboterList.size(); i++) {
+                if (roboterList[i]->x == x && roboterList[i]->y == y)
+                    occupied = true;
+            }
+            if (occupied)
+                printBlock(x, y, '@');
+            else if (x == 0 || x == board[y].size() - 1)
+                printBlock(x, y, '#');
+            else printBlock(x, y, c);
+        }
+        cout << termcolor::reset << endl;
+    }
 }
 
-const int Maze::getIntAt(const int x, const int y) const {
-    return board[y][x];
+void Maze::printStartEnd() const {
+    cout << "Startpoint: [" << startX << ", " << startY << "] " << endl;
+    cout << "Endpoint: [" << endX << ", " << endY << "] " << endl;
+}
+
+void Maze::printStepTable() const {
+
 }
 
 const char Maze::printBlock(const int x, const int y, const char c) const {
@@ -177,23 +190,17 @@ const char Maze::printBlock(const int x, const int y, const char c) const {
     cout << c;
 }
 
-void Maze::setIntAt(const int x, const int y, const int value) {
-    board[y][x] = value;
-}
-
-void Maze::addLine(vector<int> line) {
-    board.push_back(line);
-}
-
-void Maze::getStartAndEnd() {
+void Maze::determineStartAndEndPoint() {
     startX = -1;
     startY = -1;
     endX = -1;
     endY = -1;
     int x = 0;
     int y = 0;
+
+    //top: left to right
     for (x = 0; x < board[y].size() && x >= 0; x++) {
-        if (getIntAt(x, y) == 0) {
+        if (board[y][x] == 0) {
             if (startX == -1) {
                 startX = x;
                 startY = y;
@@ -204,8 +211,9 @@ void Maze::getStartAndEnd() {
             }
         }
     }
+    //left: top to bottom
     for (x--; y < board.size() && y >= 0; y++) {
-        if (getIntAt(x, y) == 0) {
+        if (board[y][x] == 0) {
             if (startX == -1) {
                 startX = x;
                 startY = y;
@@ -216,8 +224,10 @@ void Maze::getStartAndEnd() {
             }
         }
     }
+
+    //bottom: right to left
     for (y--; x < board[y].size() && x >= 0; x--) {
-        if (getIntAt(x, y) == 0) {
+        if (board[y][x] == 0) {
             if (startX == -1) {
                 startX = x;
                 startY = y;
@@ -228,8 +238,10 @@ void Maze::getStartAndEnd() {
             }
         }
     }
+
+    //left: bottom to top
     for (x++; y < board.size() && y >= 0; y--) {
-        if (getIntAt(x, y) == 0) {
+        if (board[y][x] == 0) {
             if (startX == -1) {
                 startX = x;
                 startY = y;
